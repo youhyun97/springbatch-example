@@ -32,7 +32,9 @@ public class SampleJobConfiguration {
     public Step simpleStep1(@Value("#{jobParameters[requestDate]}") String requestDate) {
         return stepBuilderFactory.get("simpleStep1") // simpleStep1 이름의 Batch Job 생성
                 .tasklet((contribution, chunkContext) -> { // step안에서 수행될 기능 명시
-                    throw new IllegalArgumentException("step1에서 실패합니다.");
+                    log.info(">>>>> This is Step1");
+                    log.info(">>>>> requestDate = {}", requestDate);
+                    return RepeatStatus.FINISHED;
                 })
                 .build();
     }
